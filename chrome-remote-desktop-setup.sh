@@ -101,7 +101,7 @@ XORG_DUMMY_VIDEO_RAM = 1048576 # KiB
 # with large or multiple monitors. This is a comma-separated list of
 # resolutions that will be made available if the X server supports RANDR. These
 # defaults can be overridden in ~/.profile.
-DEFAULT_SIZES = "1600x1200,3840x2560"
+DEFAULT_SIZES = "1920x1080"
 
 # Xorg's dummy driver only supports switching between preconfigured sizes. To
 # make resize-to-fit somewhat useful, include several common resolutions by
@@ -133,7 +133,7 @@ SYSTEM_SESSION_FILE_PATH = "/etc/chrome-remote-desktop-session"
 DEBIAN_XSESSION_PATH = "/etc/X11/Xsession"
 
 X_LOCK_FILE_TEMPLATE = "/tmp/.X%d-lock"
-FIRST_X_DISPLAY_NUMBER = 20
+FIRST_X_DISPLAY_NUMBER = 0
 
 # Amount of time to wait between relaunching processes.
 SHORT_BACKOFF_TIME = 5
@@ -476,8 +476,8 @@ class Desktop:
     """Return a candidate display number for which there is currently no
     X Server lock file"""
     display = FIRST_X_DISPLAY_NUMBER
-    while os.path.exists(X_LOCK_FILE_TEMPLATE % display):
-      display += 1
+    #while os.path.exists(X_LOCK_FILE_TEMPLATE % display):
+    #  display += 1
     return display
 
   def _init_child_env(self):
@@ -775,8 +775,11 @@ class Desktop:
     self._init_child_env()
     self._setup_pulseaudio()
     self._setup_gnubby()
-    self._launch_x_server(x_args)
-    self._launch_x_session()
+    #self._launch_x_server(x_args)
+    #self._launch_x_session()
+    display = self.get_unused_display_number()
+    self.child_env["DISPLAY"] = ":%d" % display
+
 
   def launch_host(self, host_config, extra_start_host_args):
     # Start remoting host

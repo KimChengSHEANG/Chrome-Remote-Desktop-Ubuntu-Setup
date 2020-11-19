@@ -9,7 +9,8 @@ exec /etc/X11/Xsession 'env GNOME_SHELL_SESSION_MODE=ubuntu /usr/bin/gnome-sessi
 EOF
 
 sudo usermod -a -G chrome-remote-desktop $USER
-sudo systemctl disable chrome-remote-desktop
+# sudo systemctl disable chrome-remote-desktop
+/opt/google/chrome-remote-desktop/chrome-remote-desktop --stop
 mkdir -p ~/.config/chrome-remote-desktop
 cat <<EOF > ~/.config/autostart/chrome-remote-desktop.desktop
 [Desktop Entry]
@@ -24,8 +25,8 @@ Comment[en_US]=Autostart Chrome Remote Desktop After Login to prevent service fr
 Comment=Autostart Chrome Remote Desktop After Login to prevent service from preventing login
 EOF
 
-
-sudo cat <<EOF > /opt/google/chrome-remote-desktop/chrome-remote-desktop
+sudo rm /opt/google/chrome-remote-desktop/chrome-remote-desktop
+cat << EOF | sudo tee -a /opt/google/chrome-remote-desktop/chrome-remote-desktop
 #!/usr/bin/python3
 # Copyright (c) 2012 The Chromium Authors. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
@@ -1838,6 +1839,7 @@ if __name__ == "__main__":
                       format="%(asctime)s:%(levelname)s:%(message)s")
   sys.exit(main())
 EOF
+sudo chmod +x /opt/google/chrome-remote-desktop/chrome-remote-desktop
+# /opt/google/chrome-remote-desktop/chrome-remote-desktop --start
 
-
-echo "Initial Installation Done - Please Reboot and continue following the instructios on https://kmyers.me/blog/linux/chrome-remote-desktop-on-ubuntu-20-04-setup-guide-setup-script"
+#echo "Initial Installation Done - Please Reboot and continue following the instructios on https://kmyers.me/blog/linux/chrome-remote-desktop-on-ubuntu-20-04-setup-guide-setup-script"

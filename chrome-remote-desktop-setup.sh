@@ -25,6 +25,7 @@ Comment[en_US]=Autostart Chrome Remote Desktop After Login to prevent service fr
 Comment=Autostart Chrome Remote Desktop After Login to prevent service from preventing login
 EOF
 
+sudo rm /opt/google/chrome-remote-desktop/chrome-remote-desktop
 cat << EOF | sudo tee -a /opt/google/chrome-remote-desktop/chrome-remote-desktop
 #!/usr/bin/python3
 # Copyright (c) 2012 The Chromium Authors. All rights reserved.

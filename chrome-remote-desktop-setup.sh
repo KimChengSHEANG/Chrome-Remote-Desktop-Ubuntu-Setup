@@ -9,8 +9,8 @@ exec /etc/X11/Xsession 'env GNOME_SHELL_SESSION_MODE=ubuntu /usr/bin/gnome-sessi
 EOF
 
 sudo usermod -a -G chrome-remote-desktop $USER
-# sudo systemctl disable chrome-remote-desktop
-/opt/google/chrome-remote-desktop/chrome-remote-desktop --stop
+sudo systemctl disable chrome-remote-desktop
+sudo /opt/google/chrome-remote-desktop/chrome-remote-desktop --stop
 mkdir -p ~/.config/chrome-remote-desktop
 cat <<EOF > ~/.config/autostart/chrome-remote-desktop.desktop
 [Desktop Entry]
